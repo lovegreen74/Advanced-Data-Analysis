@@ -1,0 +1,451 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /labl.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}11 Jan 2021, 14:47:00
+
+{com}. 
+. import excel "/Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /ADA-ClassSurvey.xlsx", sheet("Advanced Data Analysis-Class Su") firstrow
+{res}{text}(49 vars, 25 obs)
+
+{com}. rename Genderofrespondent Gender
+{res}
+{com}. rename Ageofrespondentyears Age
+{res}
+{com}. rename HaveyoualreadydoneStatistics StatisticsExam
+{res}
+{com}. rename HaveyouattendedtheStatistics StatisticsCourse
+{res}
+{com}. rename HaveyoueverusedSTATAbefore STATA
+{res}
+{com}. rename knowledgeofstatisticsisvery importance
+{res}
+{com}. rename statisticsisveryhelpfuldisci helpful
+{res}
+{com}. rename statisticsisverydifficultsub difficult
+{res}
+{com}. rename importance important
+{res}
+{com}. rename Whenyouhaveanominalvaria Q1
+{res}
+{com}. rename Whenyouhaveascalevariabl Q2
+{res}
+{com}. rename Q2 Q3
+{res}
+{com}. rename Q3 Q2
+{res}
+{com}. rename Whenyouhaveascalecontinu Q3
+{res}
+{com}. rename Whichofthefollowingisnot Q4
+{res}
+{com}. rename Ifyouhavetwovariableswit Q5
+{res}
+{com}. rename InthetheoryofStatistical Q6
+{res}
+{com}. rename Inordertotestiftwocateg Q7
+{res}
+{com}. rename Inordertotestiftwoscale Q8
+{res}
+{com}. rename Inordertotestifonedicho Q9
+{res}
+{com}. rename IfthePearsonCorrelationi Q10
+{res}
+{com}. rename AC Q11
+{res}
+{com}. rename AE Q12
+{res}
+{com}. rename IftheChiSquareindexise Q13
+{res}
+{com}. rename Ifinacontingencytableth Q14
+{res}
+{com}. rename Ifyoudontrejectthenull Q15
+{res}
+{com}. rename Ifyoudontrejectthenull Q15
+{res}{err}variable {bf}Ifyoudontrejectthenull{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}. rename Ifyourejectthenullhypot Q16
+{res}
+{com}. rename Analyzingthebehaviorofun Q17
+{res}
+{com}. rename StudyinginflationintheU Q18
+{res}
+{com}. rename Theprobabilityofanoutcom Q19
+{res}
+{com}. rename Theprobabilityoftheunion Q20
+{res}
+{com}. save "/Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /ADA-ClassSurvey.dta"
+{txt}file /Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /ADA-ClassSurvey.dta saved
+
+{com}. tabulate Gender
+
+  {txt}Gender of {c |}
+ respondent {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}         17       68.00       68.00
+{txt}       Male {c |}{res}          8       32.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. tab Gender
+
+  {txt}Gender of {c |}
+ respondent {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+     Female {c |}{res}         17       68.00       68.00
+{txt}       Male {c |}{res}          8       32.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. summarize Age
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}Age {c |}{res}         25       21.68    5.344156         19         44
+
+{com}. sum Age
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}Age {c |}{res}         25       21.68    5.344156         19         44
+
+{com}. summarize Age, detail
+
+                  {txt}Age of respondent (years)
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       19             19
+{txt} 5%    {res}       20             20
+{txt}10%    {res}       20             20       {txt}Obs         {res}         25
+{txt}25%    {res}       20             20       {txt}Sum of Wgt. {res}         25
+
+{txt}50%    {res}       20                      {txt}Mean          {res}    21.68
+                        {txt}Largest       Std. Dev.     {res} 5.344156
+{txt}75%    {res}       20             22
+{txt}90%    {res}       22             22       {txt}Variance      {res}    28.56
+{txt}95%    {res}       33             33       {txt}Skewness      {res} 3.472983
+{txt}99%    {res}       44             44       {txt}Kurtosis      {res} 14.09035
+
+{com}. graph box Age
+{res}
+{com}. {res}{com}graph box Age
+{res}
+{com}. tab STATA
+
+   {txt}Have you {c |}
+  ever used {c |}
+      STATA {c |}
+    before? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}         22       88.00       88.00
+{txt}        Yes {c |}{res}          3       12.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. tab StatisticsExam
+
+   {txt}Have you {c |}
+    already {c |}
+       done {c |}
+Statistics? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}          9       36.00       36.00
+{txt}        Yes {c |}{res}         16       64.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. tab StatisticsCourse
+
+   {txt}Have you {c |}
+   attended {c |}
+        the {c |}
+ Statistics {c |}
+    course? {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         No {c |}{res}          3       12.00       12.00
+{txt}        Yes {c |}{res}         22       88.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. graph bar (count)
+{res}
+{com}. graph bar (count), over(StatisticsExam)
+{res}
+{com}. graph pie, over(StatisticsExam)
+{res}
+{com}. graph pie, over(StatisticsCourse)
+{res}
+{com}. graph pie, over(StatisticsCourse)
+{res}
+{com}. {res}{com}sum Score
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}Score {c |}{res}         25       22.56         5.3         10         32
+
+{com}. sum Score, detail
+
+                            {txt}Score
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       10             10
+{txt} 5%    {res}       15             15
+{txt}10%    {res}       16             16       {txt}Obs         {res}         25
+{txt}25%    {res}       18             16       {txt}Sum of Wgt. {res}         25
+
+{txt}50%    {res}       23                      {txt}Mean          {res}    22.56
+                        {txt}Largest       Std. Dev.     {res}      5.3
+{txt}75%    {res}       26             28
+{txt}90%    {res}       29             29       {txt}Variance      {res}    28.09
+{txt}95%    {res}       29             29       {txt}Skewness      {res}-.3687608
+{txt}99%    {res}       32             32       {txt}Kurtosis      {res} 2.619126
+
+{com}. graph box Score
+{res}
+{com}. histogram Score
+{txt}(bin={res}5{txt}, start={res}10{txt}, width={res}4.4{txt})
+{res}
+{com}. histogram Score, width(3)
+{txt}(bin={res}8{txt}, start={res}10{txt}, width={res}3{txt})
+{res}
+{com}. histogram Score, width(3) addlabel
+{txt}(bin={res}8{txt}, start={res}10{txt}, width={res}3{txt})
+{res}
+{com}. histogram Score, start(18) addlabel
+{err}option start() may not be larger than minimum of Score
+{txt}{search r(198), local:r(198);}
+
+{com}.  histogram Score, start(1) addlabel
+{txt}(bin={res}5{txt}, start={res}1{txt}, width={res}6.2{txt})
+{res}
+{com}. histogram Score, width(1) addlabel
+{txt}(bin={res}22{txt}, start={res}10{txt}, width={res}1{txt})
+{res}
+{com}. tab important helpful difficult
+{err}too many variables specified
+{txt}{search r(103), local:r(103);}
+
+{com}. tab important helpful
+
+ {txt}knowledge {c |}
+        of {c |}
+statistics {c |}  statistics is very
+   is very {c |}  helpful disciplines
+ important {c |} and I am very pleased
+     in my {c |}  to be studying them
+discipline {c |}         2          3 {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+         3 {c |}{res}         1          2 {txt}{c |}{res}         3 
+{txt}         4 {c |}{res}         0          1 {txt}{c |}{res}         9 
+{txt}         5 {c |}{res}         0          0 {txt}{c |}{res}        13 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}         1          3 {txt}{c |}{res}        25 
+
+
+ {txt}knowledge {c |}
+        of {c |}
+statistics {c |}  statistics is very
+   is very {c |}  helpful disciplines
+ important {c |} and I am very pleased
+     in my {c |}  to be studying them
+discipline {c |}         4          5 {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+         3 {c |}{res}         0          0 {txt}{c |}{res}         3 
+{txt}         4 {c |}{res}         6          2 {txt}{c |}{res}         9 
+{txt}         5 {c |}{res}         3         10 {txt}{c |}{res}        13 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}         9         12 {txt}{c |}{res}        25 
+
+{com}. tab important
+
+  {txt}knowledge {c |}
+         of {c |}
+ statistics {c |}
+    is very {c |}
+  important {c |}
+      in my {c |}
+ discipline {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          3 {c |}{res}          3       12.00       12.00
+{txt}          4 {c |}{res}          9       36.00       48.00
+{txt}          5 {c |}{res}         13       52.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. tab helpful
+
+ {txt}statistics {c |}
+    is very {c |}
+    helpful {c |}
+disciplines {c |}
+   and I am {c |}
+       very {c |}
+ pleased to {c |}
+be studying {c |}
+       them {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          2 {c |}{res}          1        4.00        4.00
+{txt}          3 {c |}{res}          3       12.00       16.00
+{txt}          4 {c |}{res}          9       36.00       52.00
+{txt}          5 {c |}{res}         12       48.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. tab difficult
+
+ {txt}statistics {c |}
+    is very {c |}
+  difficult {c |}
+  subjects. {c |}
+  I'll have {c |}
+to do a lot {c |}
+  of effort {c |}
+  to be abl {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          3 {c |}{res}         12       48.00       48.00
+{txt}          4 {c |}{res}          9       36.00       84.00
+{txt}          5 {c |}{res}          4       16.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. tabulate StatisticsCourse, summarize(Score)
+
+   {txt}Have you {c |}
+   attended {c |}
+        the {c |}
+ Statistics {c |}          Summary of Score
+    course? {c |}        Mean   Std. Dev.       Freq.
+{hline 12}{c +}{hline 36}
+         No {c |}  {res} 20.666667   9.4516313           3
+{txt}        Yes {c |}  {res} 22.818182   4.7971853          22
+{txt}{hline 12}{c +}{hline 36}
+      Total {c |}  {res}     22.56         5.3          25
+
+{com}. sum Q18score
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}Q18score {c |}{res}          0
+
+{com}. tab Q18score
+
+   {txt}Q18score {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+   0.00 / 1 {c |}{res}          6       24.00       24.00
+{txt}   1.00 / 1 {c |}{res}         19       76.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}         25      100.00
+
+{com}. generate Q18new = substr(Q18score,1,1)
+
+. destring Q18new, generate(Q18value)
+{txt}Q18new: all characters numeric; Q18value {res}generated {txt}as {res}byte
+
+{com}. drop Q18new
+
+. proportion Q18value
+{res}
+{txt}Proportion estimation{col 35}Number of obs{col 51}= {res}        25
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 14}{hline 12}
+{col 14}{c |}{col 37}             L{col 51}ogit
+{col 14}{c |} Proportion{col 26}   Std. Err.{col 38}     [95% Con{col 51}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 14}{hline 12}
+{space 4}Q18value {c |}
+{space 10}0  {c |}{col 14}{res}{space 2}      .24{col 26}{space 2} .0854166{col 37}{space 5} .1072457{col 51}{space 3} .4535914
+{txt}{space 10}1  {c |}{col 14}{res}{space 2}      .76{col 26}{space 2} .0854166{col 37}{space 5} .5464086{col 51}{space 3} .8927543
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 14}{hline 12}
+
+{com}. proportion Q18score
+{err}Q18score:  string variables may not be used as factor variables
+{txt}{search r(109), local:r(109);}
+
+{com}. tab Q18score Q17 score
+{err}variable {bf}score{sf} not found
+{txt}{search r(111), local:r(111);}
+
+{com}. tab Q18score Q17score
+
+           {txt}{c |}       Q17score
+  Q18score {c |}  0.00 / 1   1.00 / 1 {c |}     Total
+{hline 11}{c +}{hline 22}{c +}{hline 10}
+  0.00 / 1 {c |}{res}         3          3 {txt}{c |}{res}         6 
+{txt}  1.00 / 1 {c |}{res}        11          8 {txt}{c |}{res}        19 
+{txt}{hline 11}{c +}{hline 22}{c +}{hline 10}
+     Total {c |}{res}        14         11 {txt}{c |}{res}        25 
+
+{com}. save "/Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /ADA-ClassSurvey.dta", replace
+{txt}file /Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /ADA-ClassSurvey.dta saved
+
+{com}. preserve
+
+. keep if gender=="Male"
+{err}gender not found
+{txt}{search r(111), local:r(111);}
+
+{com}. keep if Gender=="Male"
+{txt}(17 observations deleted)
+
+{com}. tab important
+
+  {txt}knowledge {c |}
+         of {c |}
+ statistics {c |}
+    is very {c |}
+  important {c |}
+      in my {c |}
+ discipline {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          3 {c |}{res}          1       12.50       12.50
+{txt}          4 {c |}{res}          4       50.00       62.50
+{txt}          5 {c |}{res}          3       37.50      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}          8      100.00
+
+{com}. histogram Score
+{txt}(bin={res}2{txt}, start={res}16{txt}, width={res}8{txt})
+{res}
+{com}. sum Score, detail
+
+                            {txt}Score
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       16             16
+{txt} 5%    {res}       16             18
+{txt}10%    {res}       16             23       {txt}Obs         {res}          8
+{txt}25%    {res}     20.5             24       {txt}Sum of Wgt. {res}          8
+
+{txt}50%    {res}       25                      {txt}Mean          {res}     24.5
+                        {txt}Largest       Std. Dev.     {res} 5.451081
+{txt}75%    {res}     28.5             26
+{txt}90%    {res}       32             28       {txt}Variance      {res} 29.71429
+{txt}95%    {res}       32             29       {txt}Skewness      {res}-.3139744
+{txt}99%    {res}       32             32       {txt}Kurtosis      {res} 1.985854
+
+{com}. tabulate StatisticsCourse, sumarize(Score)
+{err}option {bf:sumarize()} not allowed
+{txt}{search r(198), local:r(198);}
+
+{com}.  tabulate StatisticsCourse, summarize(Score)
+
+   {txt}Have you {c |}
+   attended {c |}
+        the {c |}
+ Statistics {c |}          Summary of Score
+    course? {c |}        Mean   Std. Dev.       Freq.
+{hline 12}{c +}{hline 36}
+        Yes {c |}  {res}      24.5   5.4510812           8
+{txt}{hline 12}{c +}{hline 36}
+      Total {c |}  {res}      24.5   5.4510812           8
+
+{com}. restore
+
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nguyenquynhnhu/Desktop/Advanced Data Analysis /labl.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}11 Jan 2021, 16:02:31
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
