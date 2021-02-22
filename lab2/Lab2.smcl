@@ -1,0 +1,269 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/silviasalini/Google Drive/Advanced Data Analysis IPLE/Lab2/Lab2.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}15 Jan 2021, 17:44:42
+{txt}
+{com}. cmdlog using Lab2, replace 
+{txt}(cmdlog /Users/silviasalini/Google Drive/Advanced Data Analysis IPLE/Lab2/Lab2.txt opened)
+
+{com}. 
+. use "Employee data.dta", clear
+{txt}
+{com}. 
+. *1.     Get the age variable from the date of birth
+. gen year=year( bdate )
+{txt}(1 missing value generated)
+
+{com}. gen age=2016 - year
+{txt}(1 missing value generated)
+
+{com}. label variable age "Age of respondent"
+{txt}
+{com}. drop year
+{txt}
+{com}. 
+. *2.     Describe the variable age and calculate the confidence intervals for the mean
+. histogram age, discrete width(5)
+{txt}(start={res}45{txt}, width={res}5{txt})
+{res}{txt}
+{com}. histogram age, discrete width(10)
+{txt}(start={res}45{txt}, width={res}10{txt})
+{res}{txt}
+{com}. histogram age, discrete width(1)
+{txt}(start={res}45{txt}, width={res}1{txt})
+{res}{txt}
+{com}. 
+. sum age
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}age {c |}{res}        473     59.6723    11.78409         45         87
+{txt}
+{com}. sum age, detail
+
+                      {txt}Age of respondent
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       46             45
+{txt} 5%    {res}       47             46
+{txt}10%    {res}       48             46       {txt}Obs         {res}        473
+{txt}25%    {res}       51             46       {txt}Sum of Wgt. {res}        473
+
+{txt}50%    {res}       54                      {txt}Mean          {res}  59.6723
+                        {txt}Largest       Std. Dev.     {res} 11.78409
+{txt}75%    {res}       68             86
+{txt}90%    {res}       79             87       {txt}Variance      {res} 138.8648
+{txt}95%    {res}       83             87       {txt}Skewness      {res} .8568478
+{txt}99%    {res}       86             87       {txt}Kurtosis      {res} 2.423247
+{txt}
+{com}. ci means age 
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+         age {c |}{col 16}{res}       473{col 29}  59.6723{col 41} .5418332{col 57}  58.6076{col 69} 60.73701{txt}
+
+{com}. 
+. *3.     Calculate the z-score for age and plot it 
+. * you can do manually
+. gen zage=(age-59.6723)/ 11.78409
+{txt}(1 missing value generated)
+
+{com}. * you can do automatically 
+. *findit zscore
+. zscore age
+{res}z_age {txt}created with 1 missing value
+
+{com}. histogram z_age, discrete width(1)
+{txt}(start={res}-1.2450941{txt}, width={res}1{txt})
+{res}{txt}
+{com}. * compare on the data viewer zage z_age 
+. drop zage
+{txt}
+{com}. 
+. * if you need to calculate CI without data, only using sample statistics
+. * calculate confidence intervals for the mean 
+. * sample mean=34, sample standard deviation=4, n=100
+. cii means 100 34 4
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+             {c |}{col 16}{res}       100{col 29}       34{col 41}       .4{col 57} 33.20631{col 69} 34.79369{txt}
+
+{com}. cii means 100 34 40
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+             {c |}{col 16}{res}       100{col 29}       34{col 41}        4{col 57} 26.06313{col 69} 41.93687{txt}
+
+{com}. cii means 1000 34 40
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+             {c |}{col 16}{res}     1,000{col 29}       34{col 41} 1.264911{col 57} 31.51781{col 69} 36.48219{txt}
+
+{com}. cii means 100 34 4, level(90)
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [90% Conf. Interval]
+{hline 13}{c +}{hline 63}
+             {c |}{col 16}{res}       100{col 29}       34{col 41}       .4{col 57} 33.33584{col 69} 34.66416{txt}
+
+{com}. 
+. * calculate confidence intervals proportion exact
+. cii proportions 100 70, exact
+
+{txt}{col 58}{hline 2} Binomial Exact {hline 2}
+    Variable {c |}        Obs  Proportion    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+             {c |}{col 16}{res}       100{col 29}       .7{col 41} .0458258{col 57} .6001853{col 69} .7875936{txt}
+
+{com}. * calculate confidence intervals proportion normal approximation (wald)
+. cii proportions 100 70, wald
+
+{txt}{col 58}{hline 2} Binomial Wald {hline 3}
+    Variable {c |}        Obs  Proportion    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+             {c |}{col 16}{res}       100{col 29}       .7{col 41} .0458258{col 57} .6101832{col 69} .7898168{txt}
+
+{com}. * check the calculus applying the formula p +/- sqrt((p(1-p))/n) * z(1-alpha/2)
+. 
+. *4.     Check whether the average salary of employees is equal to 30,000 euros
+. * you can calculate the CI and observ that 30000 is not included 
+. ci mean salary
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+      salary {c |}{col 16}{res}       474{col 29} 34419.57{col 41} 784.3111{col 57}  32878.4{col 69} 35960.73{txt}
+
+{com}. 
+. *(One-Sample t test)
+. ttest salary == 30000
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+  salary {c |}{res}{col 12}    474{col 22} 34419.57{col 34} 784.3111{col 46} 17075.66{col 58}  32878.4{col 70} 35960.73
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}salary{txt})                                           t = {res}  5.6350
+{txt}Ho: mean = {res}30000                                 {txt}degrees of freedom = {res}     473
+
+  {txt}Ha: mean < {res}30000             {txt}Ha: mean != {res}30000             {txt}Ha: mean > {res}30000
+ {txt}Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+{txt}
+{com}. 
+. * calulator for the ttest
+. ttesti 30 45 9 40
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+       x {c |}{res}{col 12}     30{col 22}       45{col 34} 1.643168{col 46}        9{col 58} 41.63934{col 70} 48.36066
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}x{txt})                                                t = {res}  3.0429
+{txt}Ho: mean = {res}40                                    {txt}degrees of freedom = {res}      29
+
+    {txt}Ha: mean < {res}40               {txt}Ha: mean != {res}40                 {txt}Ha: mean > {res}40
+ {txt}Pr(T < t) = {res}0.9975         {txt}Pr(|T| > |t|) = {res}0.0049          {txt}Pr(T > t) = {res}0.0025
+{txt}
+{com}. ttesti 30 45 19 40
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+       x {c |}{res}{col 12}     30{col 22}       45{col 34}  3.46891{col 46}       19{col 58} 37.90528{col 70} 52.09472
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}x{txt})                                                t = {res}  1.4414
+{txt}Ho: mean = {res}40                                    {txt}degrees of freedom = {res}      29
+
+    {txt}Ha: mean < {res}40               {txt}Ha: mean != {res}40                 {txt}Ha: mean > {res}40
+ {txt}Pr(T < t) = {res}0.9199         {txt}Pr(|T| > |t|) = {res}0.1602          {txt}Pr(T > t) = {res}0.0801
+{txt}
+{com}. ttesti 300 45 19 40
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+       x {c |}{res}{col 12}    300{col 22}       45{col 34} 1.096966{col 46}       19{col 58} 42.84125{col 70} 47.15875
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}x{txt})                                                t = {res}  4.5580
+{txt}Ho: mean = {res}40                                    {txt}degrees of freedom = {res}     299
+
+    {txt}Ha: mean < {res}40               {txt}Ha: mean != {res}40                 {txt}Ha: mean > {res}40
+ {txt}Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+{txt}
+{com}. 
+. *5.Check if the average salary of the males is different from that of the females both graphically and through an appropriate test*
+. *(Two-sample t test)
+. graph box salary, over(gender)
+{res}{txt}
+{com}. *findit ciplot
+. ciplot salary, by(gender)
+{res}{txt}
+{com}. ttest salary, by(gender)
+
+{txt}Two-sample t test with equal variances
+{hline 9}{c TT}{hline 68}
+   Group{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+  Female {c |}{res}{col 12}    216{col 22} 26031.92{col 34} 514.2582{col 46} 7558.021{col 58} 25018.29{col 70} 27045.55
+    {txt}Male {c |}{res}{col 12}    258{col 22} 41441.78{col 34} 1213.968{col 46} 19499.21{col 58} 39051.19{col 70} 43832.37
+{txt}{hline 9}{c +}{hline 68}
+combined {c |}{res}{col 12}    474{col 22} 34419.57{col 34} 784.3111{col 46} 17075.66{col 58}  32878.4{col 70} 35960.73
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 22}-15409.86{col 34} 1407.906{col 58} -18176.4{col 70}-12643.32
+{txt}{hline 9}{c BT}{hline 68}
+    diff = mean({res}Female{txt}) - mean({res}Male{txt})                              t = {res}-10.9452
+{txt}Ho: diff = 0                                     degrees of freedom = {res}     472
+
+    {txt}Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = {res}0.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}1.0000
+{txt}
+{com}. 
+. *6.Check whether the current average salary has significantly increased compared to the initial salary
+. * (Paired-Sample t test)
+. ttest salary == salbegin
+
+{txt}Paired t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+  salary {c |}{res}{col 12}    474{col 22} 34419.57{col 34} 784.3111{col 46} 17075.66{col 58}  32878.4{col 70} 35960.73
+{txt}salbegin {c |}{res}{col 12}    474{col 22} 17016.09{col 34} 361.5104{col 46} 7870.638{col 58} 16305.72{col 70} 17726.45
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 12}    474{col 22} 17403.48{col 34} 496.7319{col 46} 10814.62{col 58} 16427.41{col 70} 18379.56
+{txt}{hline 9}{c BT}{hline 68}
+     mean(diff) = mean({res}salary{txt} - {res}salbegin{txt})                         t = {res} 35.0360
+{txt} Ho: mean(diff) = 0                              degrees of freedom = {res}     473
+
+ {txt}Ha: mean(diff) < 0           Ha: mean(diff) != 0           Ha: mean(diff) > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+{txt}
+{com}. * Rememeber that you can also comapre means of two variables not paired (Ex. Sales of vegetarian food VS Sales of vegan food)
+. *ttest var1 == var2, unpaired
+. 
+. log close 
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/silviasalini/Google Drive/Advanced Data Analysis IPLE/Lab2/Lab2.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}15 Jan 2021, 17:44:49
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/nguyenquynhnhu/Desktop/IPLE/Advanced Data Analysis /Lab2/Lab2.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}12 Feb 2021, 11:44:13
+
+{com}. use "/Users/nguyenquynhnhu/Desktop/IPLE/Advanced Data Analysis /Lab3/gss02subset.dta"
+
+. drop
+{err}varlist, if exp, or in range required
+{txt}{search r(100), local:r(100);}
+
+{com}. 
