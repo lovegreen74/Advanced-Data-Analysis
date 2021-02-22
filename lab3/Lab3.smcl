@@ -1,0 +1,409 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/silviasalini/Google Drive/Advanced Data Analysis IPLE/Lab3/Lab3.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}15 Jan 2021, 17:53:32
+{txt}
+{com}. cmdlog using Lab3, replace
+{txt}(cmdlog /Users/silviasalini/Google Drive/Advanced Data Analysis IPLE/Lab3/Lab3.txt opened)
+
+{com}. 
+. *Dataset: Employee data.dat
+. use "Employee data.dta", clear
+{txt}
+{com}. 
+. gen year=year( bdate )
+{txt}(1 missing value generated)
+
+{com}. gen age=2016 - year
+{txt}(1 missing value generated)
+
+{com}. label variable age "Age of respondent"
+{txt}
+{com}. drop year
+{txt}
+{com}. 
+. *1.     Check if the job category influences the average salary, both with an appropriate test and graphically
+. graph box salary, over(jobcat)
+{res}{txt}
+{com}. ciplot salary, by(jobcat)
+{res}{txt}
+{com}. * ttest salary, by(jobcat)
+. * error
+. table jobcat, contents(freq mean salary sd salary)
+
+{txt}{hline 10}{c TT}{hline 41}
+Employmen {c |}
+t         {c |}
+Category  {c |}        Freq.  mean(salary)    sd(salary)
+{hline 10}{c +}{hline 41}
+ Clerical {c |}          {res}363      27838.54      7567.995
+{txt}Custodial {c |}           {res}27     30938.889      2114.616
+  {txt}Manager {c |}           {res}84     63977.798      18244.78
+{txt}{hline 10}{c BT}{hline 41}
+
+{com}. *by jobcat, sort : ci mean salary
+. oneway salary jobcat, tabulate
+
+ {txt}Employment {c |}      Summary of Current Salary
+   Category {c |}        Mean   Std. Dev.       Freq.
+{hline 12}{c +}{hline 36}
+   Clerical {c |}  {res}  27838.54    7567.995         363
+  {txt}Custodial {c |}  {res} 30938.889   2114.6164          27
+  {txt}  Manager {c |}  {res} 63977.798   18244.776          84
+{txt}{hline 12}{c +}{hline 36}
+      Total {c |}  {res} 34419.568   17075.661         474
+
+                        {txt}Analysis of Variance
+    Source              SS         df      MS            F     Prob > F
+{hline 72}
+Between groups     {res} 8.9438e+10      2   4.4719e+10    434.48     0.0000
+{txt} Within groups     {res} 4.8478e+10    471    102925714
+{txt}{hline 72}
+    Total          {res} 1.3792e+11    473    291578214
+
+{txt}Bartlett's test for equal variances:  chi2({res}2{txt}) = {res}194.6489{txt}  Prob>chi2 = {res}0.000
+{txt}
+{com}. * you can also use anova, but this produce a model 
+. anova salary jobcat
+
+                         {txt}Number of obs = {res}       474    {txt}R-squared     ={res}  0.6485
+                         {txt}Root MSE      =   {res} 10145.2    {txt}Adj R-squared ={res}  0.6470
+
+                  {txt}Source {c |} Partial SS         df         MS        F    Prob>F
+              {hline 11}{c +}{hline 52}
+                   Model {c |} {res} 8.944e+10          2   4.472e+10    434.48  0.0000
+                         {txt}{c |}
+                  jobcat {c |} {res} 8.944e+10          2   4.472e+10    434.48  0.0000
+                         {txt}{c |}
+                Residual {c |} {res} 4.848e+10        471   1.029e+08  
+              {txt}{hline 11}{c +}{hline 52}
+                   Total {c |} {res} 1.379e+11        473   2.916e+08  
+{txt}
+{com}. 
+. *2.Check if the jobcat and the gender are associated
+. tab gender jobcat
+
+           {txt}{c |}       Employment Category
+    Gender {c |}  Clerical  Custodial    Manager {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+    Female {c |}{res}       206          0         10 {txt}{c |}{res}       216 
+{txt}      Male {c |}{res}       157         27         74 {txt}{c |}{res}       258 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       363         27         84 {txt}{c |}{res}       474 
+
+{txt}
+{com}. tab gender jobcat, row
+{txt}
+{c TLC}{hline 16}{c TRC}
+{c |} Key{col 18}{c |}
+{c LT}{hline 16}{c RT}
+{c |}{space 3}{it:frequency}{col 18}{c |}
+{c |}{space 1}{it:row percentage}{col 18}{c |}
+{c BLC}{hline 16}{c BRC}
+
+           {c |}       Employment Category
+    Gender {c |}  Clerical  Custodial    Manager {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+    Female {c |}{res}       206          0         10 {txt}{c |}{res}       216 
+           {txt}{c |}{res}     95.37       0.00       4.63 {txt}{c |}{res}    100.00 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      Male {c |}{res}       157         27         74 {txt}{c |}{res}       258 
+           {txt}{c |}{res}     60.85      10.47      28.68 {txt}{c |}{res}    100.00 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       363         27         84 {txt}{c |}{res}       474 
+           {txt}{c |}{res}     76.58       5.70      17.72 {txt}{c |}{res}    100.00 
+
+{txt}
+{com}. tab gender jobcat, col
+{txt}
+{c TLC}{hline 19}{c TRC}
+{c |} Key{col 21}{c |}
+{c LT}{hline 19}{c RT}
+{c |}{space 5}{it:frequency}{col 21}{c |}
+{c |}{space 1}{it:column percentage}{col 21}{c |}
+{c BLC}{hline 19}{c BRC}
+
+           {c |}       Employment Category
+    Gender {c |}  Clerical  Custodial    Manager {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+    Female {c |}{res}       206          0         10 {txt}{c |}{res}       216 
+           {txt}{c |}{res}     56.75       0.00      11.90 {txt}{c |}{res}     45.57 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      Male {c |}{res}       157         27         74 {txt}{c |}{res}       258 
+           {txt}{c |}{res}     43.25     100.00      88.10 {txt}{c |}{res}     54.43 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       363         27         84 {txt}{c |}{res}       474 
+           {txt}{c |}{res}    100.00     100.00     100.00 {txt}{c |}{res}    100.00 
+
+{txt}
+{com}. *finit tabplot
+. tabplot gender jobcat, percent(gender)
+{res}{txt}
+{com}. tabplot gender jobcat, percent(jobcat)
+{res}{txt}
+{com}. 
+. tab gender jobcat, cell
+{txt}
+{c TLC}{hline 17}{c TRC}
+{c |} Key{col 19}{c |}
+{c LT}{hline 17}{c RT}
+{c |}{space 4}{it:frequency}{col 19}{c |}
+{c |}{space 1}{it:cell percentage}{col 19}{c |}
+{c BLC}{hline 17}{c BRC}
+
+           {c |}       Employment Category
+    Gender {c |}  Clerical  Custodial    Manager {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+    Female {c |}{res}       206          0         10 {txt}{c |}{res}       216 
+           {txt}{c |}{res}     43.46       0.00       2.11 {txt}{c |}{res}     45.57 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      Male {c |}{res}       157         27         74 {txt}{c |}{res}       258 
+           {txt}{c |}{res}     33.12       5.70      15.61 {txt}{c |}{res}     54.43 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       363         27         84 {txt}{c |}{res}       474 
+           {txt}{c |}{res}     76.58       5.70      17.72 {txt}{c |}{res}    100.00 
+
+{txt}
+{com}. tab gender jobcat, expected
+{txt}
+{c TLC}{hline 20}{c TRC}
+{c |} Key{col 22}{c |}
+{c LT}{hline 20}{c RT}
+{c |}{space 5}{it:frequency}{col 22}{c |}
+{c |}{space 1}{it:expected frequency}{col 22}{c |}
+{c BLC}{hline 20}{c BRC}
+
+           {c |}       Employment Category
+    Gender {c |}  Clerical  Custodial    Manager {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+    Female {c |}{res}       206          0         10 {txt}{c |}{res}       216 
+           {txt}{c |}{res}     165.4       12.3       38.3 {txt}{c |}{res}     216.0 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      Male {c |}{res}       157         27         74 {txt}{c |}{res}       258 
+           {txt}{c |}{res}     197.6       14.7       45.7 {txt}{c |}{res}     258.0 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       363         27         84 {txt}{c |}{res}       474 
+           {txt}{c |}{res}     363.0       27.0       84.0 {txt}{c |}{res}     474.0 
+
+{txt}
+{com}. tab gender jobcat, chi2
+
+           {txt}{c |}       Employment Category
+    Gender {c |}  Clerical  Custodial    Manager {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+    Female {c |}{res}       206          0         10 {txt}{c |}{res}       216 
+{txt}      Male {c |}{res}       157         27         74 {txt}{c |}{res}       258 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       363         27         84 {txt}{c |}{res}       474 
+
+{txt}          Pearson chi2({res}2{txt}) = {res} 79.2771  {txt} Pr = {res}0.000
+{txt}
+{com}. 
+. 
+. correlate salary age educ salbegin jobtime prevexp
+{txt}(obs=473)
+
+             {c |}   salary      age     educ salbegin  jobtime  prevexp
+{hline 13}{c +}{hline 54}
+      salary {c |}{res}   1.0000
+         {txt}age {c |}{res}  -0.1459   1.0000
+        {txt}educ {c |}{res}   0.6610  -0.2818   1.0000
+    {txt}salbegin {c |}{res}   0.8802  -0.0110   0.6331   1.0000
+     {txt}jobtime {c |}{res}   0.0844   0.0511   0.0503  -0.0185   1.0000
+     {txt}prevexp {c |}{res}  -0.0975   0.8030  -0.2519   0.0455   0.0017   1.0000
+
+{txt}
+{com}. * bivariate scatter plot
+. twoway (scatter salary salbegin)
+{res}{txt}
+{com}. * scatterplotmatrix 
+. graph matrix salary age educ salbegin jobtime prevexp
+{res}{txt}
+{com}. 
+. *Dataset: gss02subset.sav
+. use "gss02subset.dta", clear
+{txt}
+{com}. 
+. *1.Verify if respondents work in average 40 hours per week (NUMBER OF HOURS WORKED LAST WEEK)
+. hist hrs1
+{txt}(bin={res}34{txt}, start={res}-1{txt}, width={res}2.9411765{txt})
+{res}{txt}
+{com}. summ hrs1
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}hrs1 {c |}{res}      2,765    26.29042    24.23532         -1         99
+{txt}
+{com}. hist hrs1
+{txt}(bin={res}34{txt}, start={res}-1{txt}, width={res}2.9411765{txt})
+{res}{txt}
+{com}. * note that thare are 'strange' values. You must exlude repsondend that are not working
+. 
+. preserve 
+{txt}
+{com}. * when you delete observations is always better to preserve the orginal data
+. drop if hrs1<0
+{txt}(1,021 observations deleted)
+
+{com}. 
+. hist hrs1
+{txt}(bin={res}32{txt}, start={res}1{txt}, width={res}3.0625{txt})
+{res}{txt}
+{com}. summ hrs1
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}hrs1 {c |}{res}      1,744     42.2672    15.48344          1         99
+{txt}
+{com}. graph box hrs1
+{res}{txt}
+{com}. ci means hrs1
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [95% Conf. Interval]
+{hline 13}{c +}{hline 63}
+        hrs1 {c |}{col 16}{res}     1,744{col 29}  42.2672{col 41} .3707612{col 57} 41.54002{col 69} 42.99439{txt}
+
+{com}. ci means hrs1, level(99)
+
+{txt}    Variable {c |}        Obs        Mean    Std. Err.       [99% Conf. Interval]
+{hline 13}{c +}{hline 63}
+        hrs1 {c |}{col 16}{res}     1,744{col 29}  42.2672{col 41} .3707612{col 57} 41.31114{col 69} 43.22327{txt}
+
+{com}. ttest hrs1 == 40
+
+{txt}One-sample t test
+{hline 9}{c TT}{hline 68}
+Variable{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+    hrs1 {c |}{res}{col 12}  1,744{col 22}  42.2672{col 34} .3707612{col 46} 15.48344{col 58} 41.54002{col 70} 42.99439
+{txt}{hline 9}{c BT}{hline 68}
+    mean = mean({res}hrs1{txt})                                             t = {res}  6.1150
+{txt}Ho: mean = {res}40                                    {txt}degrees of freedom = {res}    1743
+
+    {txt}Ha: mean < {res}40               {txt}Ha: mean != {res}40                 {txt}Ha: mean > {res}40
+ {txt}Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+{txt}
+{com}. 
+. *2.     Does the average number of weekly working hours differ between males and females?
+. ciplot hrs1, by(sex)
+{res}{txt}
+{com}. graph box hrs1, over(sex)
+{res}{txt}
+{com}. ttest hrs1, by(sex)
+
+{txt}Two-sample t test with equal variances
+{hline 9}{c TT}{hline 68}
+   Group{col 10}{c |}{col 16}Obs{col 27}Mean{col 35}Std. Err.{col 47}Std. Dev.{col 59}[95% Conf. Interval]
+{hline 9}{c +}{hline 68}
+    MALE {c |}{res}{col 12}    850{col 22} 45.53059{col 34}  .537694{col 46} 15.67634{col 58} 44.47522{col 70} 46.58595
+  {txt}FEMALE {c |}{res}{col 12}    894{col 22} 39.16443{col 34} .4898478{col 46} 14.64637{col 58} 38.20304{col 70} 40.12582
+{txt}{hline 9}{c +}{hline 68}
+combined {c |}{res}{col 12}  1,744{col 22}  42.2672{col 34} .3707612{col 46} 15.48344{col 58} 41.54002{col 70} 42.99439
+{txt}{hline 9}{c +}{hline 68}
+    diff {c |}{res}{col 22} 6.366159{col 34} .7261241{col 58} 4.941992{col 70} 7.790325
+{txt}{hline 9}{c BT}{hline 68}
+    diff = mean({res}MALE{txt}) - mean({res}FEMALE{txt})                              t = {res}  8.7673
+{txt}Ho: diff = 0                                     degrees of freedom = {res}    1742
+
+    {txt}Ha: diff < 0                 Ha: diff != 0                 Ha: diff > 0
+ Pr(T < t) = {res}1.0000         {txt}Pr(|T| > |t|) = {res}0.0000          {txt}Pr(T > t) = {res}0.0000
+{txt}
+{com}. 
+. *3.     Does the number of hours worked weekly depends on CONDITION OF HEALTH?
+. * check the distribution of variable (to see how many catagories you have abd if you have missing or strange values)
+. tab health 
+
+  {txt}CONDITION {c |}
+  OF HEALTH {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        NAP {c |}{res}        587       33.66       33.66
+{txt}  EXCELLENT {c |}{res}        419       24.03       57.68
+{txt}       GOOD {c |}{res}        563       32.28       89.97
+{txt}       FAIR {c |}{res}        154        8.83       98.80
+{txt}       POOR {c |}{res}         19        1.09       99.89
+{txt}         DK {c |}{res}          1        0.06       99.94
+{txt}         NA {c |}{res}          1        0.06      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,744      100.00
+{txt}
+{com}.  
+. *You can see the value label inside the Manage value labels Manu (from properties in the data or from the emnu Data)
+. * observe that the variable health have a descending order, more over 0 is NAP, 8 is NA and 9 is DK
+. 
+. drop if (health==0 | health==8 | health==9)
+{txt}(589 observations deleted)
+
+{com}. 
+. oneway hrs1 health, tabulate
+
+            {txt}{c |}  Summary of NUMBER OF HOURS WORKED
+  CONDITION {c |}              LAST WEEK
+  OF HEALTH {c |}        Mean   Std. Dev.       Freq.
+{hline 12}{c +}{hline 36}
+  EXCELLENT {c |}  {res} 43.403341   14.948623         419
+  {txt}     GOOD {c |}  {res} 41.461812   15.456973         563
+  {txt}     FAIR {c |}  {res} 41.207792   16.796232         154
+  {txt}     POOR {c |}  {res} 41.526316   13.712802          19
+{txt}{hline 12}{c +}{hline 36}
+      Total {c |}  {res} 42.133333    15.44531       1,155
+
+                        {txt}Analysis of Variance
+    Source              SS         df      MS            F     Prob > F
+{hline 72}
+Between groups     {res}  1068.6149      3   356.204967      1.50     0.2142
+{txt} Within groups     {res} 274226.852   1151   238.250957
+{txt}{hline 72}
+    Total          {res} 275295.467   1154   238.557597
+
+{txt}Bartlett's test for equal variances:  chi2({res}3{txt}) = {res}  3.5959{txt}  Prob>chi2 = {res}0.309
+{txt}
+{com}. 
+. *4.     Does the CONDITION OF HEALTH influence the GENERAL HEPPINESS?
+. drop if (happy==0 | happy==8 | happy==9)
+{txt}(567 observations deleted)
+
+{com}. tab health happy, chi2 row
+{txt}
+{c TLC}{hline 16}{c TRC}
+{c |} Key{col 18}{c |}
+{c LT}{hline 16}{c RT}
+{c |}{space 3}{it:frequency}{col 18}{c |}
+{c |}{space 1}{it:row percentage}{col 18}{c |}
+{c BLC}{hline 16}{c BRC}
+
+ CONDITION {c |}        GENERAL HAPPINESS
+ OF HEALTH {c |} VERY HAPP  PRETTY HA  NOT TOO H {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+ EXCELLENT {c |}{res}       100         96         18 {txt}{c |}{res}       214 
+           {txt}{c |}{res}     46.73      44.86       8.41 {txt}{c |}{res}    100.00 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      GOOD {c |}{res}        75        182         26 {txt}{c |}{res}       283 
+           {txt}{c |}{res}     26.50      64.31       9.19 {txt}{c |}{res}    100.00 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      FAIR {c |}{res}        15         46         15 {txt}{c |}{res}        76 
+           {txt}{c |}{res}     19.74      60.53      19.74 {txt}{c |}{res}    100.00 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+      POOR {c |}{res}         4          6          5 {txt}{c |}{res}        15 
+           {txt}{c |}{res}     26.67      40.00      33.33 {txt}{c |}{res}    100.00 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}       194        330         64 {txt}{c |}{res}       588 
+           {txt}{c |}{res}     32.99      56.12      10.88 {txt}{c |}{res}    100.00 
+
+{txt}          Pearson chi2({res}6{txt}) = {res} 43.6257  {txt} Pr = {res}0.000
+{txt}
+{com}. 
+. tabplot health happy, percent(health)
+{res}{txt}
+{com}. 
+. restore
+{txt}
+{com}. log close 
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/silviasalini/Google Drive/Advanced Data Analysis IPLE/Lab3/Lab3.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}15 Jan 2021, 17:54:19
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
